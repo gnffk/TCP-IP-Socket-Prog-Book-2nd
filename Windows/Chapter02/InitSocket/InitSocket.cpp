@@ -10,7 +10,11 @@ int main(int argc, char *argv[])
 
 	// 家南 积己
 	SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
-	if (sock == INVALID_SOCKET) err_quit("socket()");
+	
+	if (sock != INVALID_SOCKET) {
+	/*	err_quit("socket()");*/
+		err_display("socket()");
+	}
 	printf("[舅覆] 家南 积己 己傍\n");
 
 	// 家南 摧扁

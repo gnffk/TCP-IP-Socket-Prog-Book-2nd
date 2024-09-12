@@ -97,7 +97,7 @@ DWORD WINAPI TCPServer4(LPVOID arg)
 		}
 
 		// 접속한 클라이언트 정보 출력
-		printf("\n[TCP 서버] 클라이언트 접속: IP 주소=%s, 포트 번호=%d\n",
+		printf("\n[TCP 서버(IPv4)] 클라이언트 접속: IP 주소=%s, 포트 번호=%d\n",
 			inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port));
 
 		// 클라이언트와 데이터 통신
@@ -139,7 +139,7 @@ DWORD WINAPI TCPServer6(LPVOID arg)
 	// 듀얼 스택을 끈다. [Windows는 꺼져 있음(기본값). UNIX/Linux는 OS마다 다름]
 	int no = 1;
 	setsockopt(listen_sock, IPPROTO_IPV6, IPV6_V6ONLY, (const char *)&no, sizeof(no));
-
+	
 	// bind()
 	struct sockaddr_in6 serveraddr;
 	memset(&serveraddr, 0, sizeof(serveraddr));
@@ -148,6 +148,7 @@ DWORD WINAPI TCPServer6(LPVOID arg)
 	serveraddr.sin6_port = htons(SERVERPORT);
 	retval = bind(listen_sock, (struct sockaddr *)&serveraddr, sizeof(serveraddr));
 	if (retval == SOCKET_ERROR) err_quit("bind()");
+
 
 	// listen()
 	retval = listen(listen_sock, SOMAXCONN);
@@ -171,7 +172,7 @@ DWORD WINAPI TCPServer6(LPVOID arg)
 		// 접속한 클라이언트 정보 출력
 		char ipaddr[INET6_ADDRSTRLEN];
 		inet_ntop(AF_INET6, &clientaddr.sin6_addr, ipaddr, sizeof(ipaddr));
-		printf("\n[TCP 서버] 클라이언트 접속: IP 주소=%s, 포트 번호=%d\n",
+		printf("\n[TCP 서버(Ipv6)] 클라이언트 접속: IP 주소=%s, 포트 번호=%d\n",
 			ipaddr, ntohs(clientaddr.sin6_port));
 
 		// 클라이언트와 데이터 통신
